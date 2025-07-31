@@ -130,7 +130,7 @@
   
   /* Interactive Elements */
   .interactive-hover {
-    @apply transition-smooth hover:scale-105 hover:shadow-glow;
+    @apply transition-all duration-300 ease-out hover:scale-105 hover:shadow-glow;
     @apply hover:-translate-y-1 cursor-pointer;
   }
   

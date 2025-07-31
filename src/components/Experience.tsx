@@ -88,116 +88,80 @@ const Experience = () => {
             initial={{ y: 30, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center mb-16"
+            className="text-center mb-8"
           >
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
-              <span className="text-gradient">Experience & Growth</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+              <span className="text-gradient">Experience</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Real-world experience through virtual internships and continuous learning through certifications.
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Virtual internships and continuous learning.
             </p>
           </motion.div>
 
           {/* Virtual Internships */}
-          <div className="mb-20">
+          <div className="mb-12">
             <motion.h3
               initial={{ y: 20, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-2xl font-bold mb-8 flex items-center gap-3"
+              className="text-xl font-bold mb-6 flex items-center gap-2"
             >
-              <Briefcase className="text-primary" />
-              Virtual Internships
+              <Briefcase className="text-primary" size={20} />
+              Internships
             </motion.h3>
 
-            <div className="space-y-8">
+            <div className="grid md:grid-cols-2 gap-6">
               {internships.map((internship, index) => (
                 <motion.div
                   key={internship.title}
-                  initial={{ x: index % 2 === 0 ? -50 : 50, opacity: 0 }}
-                  animate={inView ? { x: 0, opacity: 1 } : { x: index % 2 === 0 ? -50 : 50, opacity: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 + index * 0.2 }}
-                  className="glass-container p-8 relative overflow-hidden"
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 + index * 0.1 }}
+                  className="premium-card"
+                  whileHover={{ scale: 1.02, y: -5 }}
                 >
-                  {/* Background Gradient */}
-                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${internship.gradient} opacity-10 rounded-bl-full`}></div>
+                  <div className={`w-12 h-12 bg-gradient-to-r ${internship.gradient} rounded-lg flex items-center justify-center mb-3`}>
+                    <internship.icon className="text-white" size={24} />
+                  </div>
                   
-                  <div className="grid lg:grid-cols-3 gap-8 relative z-10">
-                    {/* Company Info */}
-                    <div>
-                      <div className={`w-16 h-16 bg-gradient-to-r ${internship.gradient} rounded-xl flex items-center justify-center mb-4`}>
-                        <internship.icon className="text-white" size={32} />
-                      </div>
-                      <h4 className="text-xl font-bold mb-2">{internship.title}</h4>
-                      <p className="text-primary font-semibold mb-2">{internship.company}</p>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                        <Calendar size={16} />
-                        {internship.duration}
-                      </div>
-                      <p className="text-sm text-muted-foreground">{internship.location}</p>
-                      <span className="inline-block mt-3 px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                        {internship.type}
-                      </span>
-                    </div>
-
-                    {/* Description & Achievements */}
-                    <div className="lg:col-span-2">
-                      <p className="text-muted-foreground mb-4">{internship.description}</p>
-                      
-                      <div className="mb-6">
-                        <h5 className="font-semibold mb-3 flex items-center gap-2">
-                          <Target className="text-primary" size={16} />
-                          Key Achievements:
-                        </h5>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          {internship.achievements.map((achievement, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="text-primary">•</span>
-                              {achievement}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className="mb-6">
-                        <h5 className="font-semibold mb-3">Skills Developed:</h5>
-                        <div className="flex flex-wrap gap-2">
-                          {internship.skills.map((skill, i) => (
-                            <span
-                              key={i}
-                              className="px-3 py-1 bg-surface text-foreground text-xs rounded-full border border-glass-border"
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {/* Certificate */}
-                      <div className="flex items-center justify-between bg-primary/5 rounded-lg p-4">
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <Award className="text-primary" size={16} />
-                            <span className="font-semibold text-sm">Certificate Earned</span>
-                          </div>
-                          {internship.certificateId && (
-                            <p className="text-xs text-muted-foreground">ID: {internship.certificateId}</p>
-                          )}
-                        </div>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="glass-container border-glass-border"
-                          asChild
+                  <h4 className="text-lg font-bold mb-1">{internship.title}</h4>
+                  <p className="text-primary font-semibold text-sm mb-2">{internship.company}</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                    <Calendar size={12} />
+                    {internship.duration}
+                  </div>
+                  
+                  <p className="text-muted-foreground text-sm mb-3 line-clamp-2">{internship.description}</p>
+                  
+                  <div className="mb-3">
+                    <div className="flex flex-wrap gap-1">
+                      {internship.skills.slice(0, 3).map((skill, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 bg-surface text-foreground text-xs rounded border border-glass-border"
                         >
-                          <a href={internship.certificateUrl} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink size={16} className="mr-2" />
-                            View
-                          </a>
-                        </Button>
-                      </div>
+                          {skill}
+                        </span>
+                      ))}
+                      {internship.skills.length > 3 && (
+                        <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded">
+                          +{internship.skills.length - 3}
+                        </span>
+                      )}
                     </div>
                   </div>
+                  
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="glass-container border-glass-border w-full"
+                    asChild
+                  >
+                    <a href={internship.certificateUrl} target="_blank" rel="noopener noreferrer">
+                      <Award size={14} className="mr-2" />
+                      Certificate
+                    </a>
+                  </Button>
                 </motion.div>
               ))}
             </div>
@@ -207,41 +171,35 @@ const Experience = () => {
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
-              <Award className="text-primary" />
-              Certifications & Training
+            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <Award className="text-primary" size={20} />
+              Certifications
             </h3>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-4">
               {certifications.map((cert, index) => (
                 <motion.div
                   key={cert.title}
-                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileHover={{ scale: 1.02, y: -3 }}
                   transition={{ type: "spring", stiffness: 300 }}
                   className="premium-card text-center"
                 >
-                  <div className="text-4xl mb-4">{cert.icon}</div>
-                  <h4 className="font-bold mb-2">{cert.title}</h4>
-                  <p className="text-primary font-semibold text-sm mb-2">{cert.provider}</p>
-                  <p className="text-muted-foreground text-sm mb-3">{cert.date}</p>
-                  
-                  {cert.certificateId && (
-                    <p className="text-xs text-muted-foreground mb-3">
-                      ID: {cert.certificateId}
-                    </p>
-                  )}
+                  <div className="text-2xl mb-2">{cert.icon}</div>
+                  <h4 className="font-bold text-sm mb-1">{cert.title}</h4>
+                  <p className="text-primary font-semibold text-xs mb-1">{cert.provider}</p>
+                  <p className="text-muted-foreground text-xs mb-3">{cert.date}</p>
                   
                   {cert.certificateUrl && (
                     <Button
                       size="sm"
                       variant="outline"
-                      className="glass-container border-glass-border"
+                      className="glass-container border-glass-border text-xs"
                       asChild
                     >
                       <a href={cert.certificateUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink size={14} className="mr-2" />
+                        <ExternalLink size={12} className="mr-1" />
                         View
                       </a>
                     </Button>

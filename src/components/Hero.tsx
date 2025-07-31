@@ -73,13 +73,11 @@ const Hero = () => {
           initial={{ y: 30, opacity: 0 }}
           animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mb-8"
+          className="mb-6"
         >
-          <div className="glass-container p-6 max-w-4xl mx-auto">
-            <blockquote className="text-lg md:text-xl font-medium text-muted-foreground italic">
-              "If I build it, it must make real impact—not just live on a resume."
-            </blockquote>
-          </div>
+          <blockquote className="text-lg md:text-xl font-medium text-gradient italic">
+            "Building for real impact, not just resumes."
+          </blockquote>
         </motion.div>
 
         {/* Stats Grid */}

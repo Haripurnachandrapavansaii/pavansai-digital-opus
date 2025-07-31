@@ -73,15 +73,15 @@ const Education = () => {
             initial={{ y: 30, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center mb-16"
+            className="text-center mb-8"
           >
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">
-              <span className="text-gradient">Education Journey</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+              <span className="text-gradient">Education</span>
             </h2>
             <div className="glass-container p-6 max-w-2xl mx-auto">
               <div className="flex items-center justify-center gap-4 mb-4">
                 <GraduationCap className="text-primary" size={32} />
-                <div className="text-left">
+                <div className="text-center">
                   <h3 className="font-bold text-xl">B.Tech in Artificial Intelligence</h3>
                   <p className="text-muted-foreground">SRM Institute of Science & Technology</p>
                 </div>
@@ -99,72 +99,53 @@ const Education = () => {
             </div>
           </motion.div>
 
-          {/* Timeline */}
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary to-secondary rounded-full"></div>
-            
-            <div className="space-y-16">
-              {yearData.map((year, index) => (
-                <motion.div
-                  key={year.year}
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={inView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 + index * 0.2 }}
-                  className={`relative ${index % 2 === 0 ? 'lg:pr-1/2 lg:text-right' : 'lg:pl-1/2 lg:ml-auto lg:text-left'}`}
-                >
-                  {/* Timeline Node */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-background z-10">
-                    <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-30"></div>
-                  </div>
-                  
-                  <div className={`glass-container p-8 max-w-lg ${index % 2 === 0 ? 'lg:mr-16' : 'lg:ml-16'}`}>
-                    {/* Year Badge */}
-                    <div className={`inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${year.color} text-white font-bold text-sm mb-4`}>
-                      <TrendingUp className="mr-2" size={16} />
-                      {year.year}
-                    </div>
-                    
-                    {/* Title */}
-                    <h3 className="text-2xl font-bold mb-3">{year.title}</h3>
-                    
-                    {/* Quote */}
-                    <blockquote className="text-muted-foreground italic mb-6 border-l-4 border-primary pl-4">
-                      "{year.quote}"
-                    </blockquote>
-                    
-                    {/* Achievements */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold mb-3 text-foreground">Key Achievements:</h4>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        {year.achievements.map((achievement, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="text-primary">•</span>
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    {/* Skills */}
-                    <div>
-                      <h4 className="font-semibold mb-3 text-foreground">Skills Gained:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {year.skills.map((skill, i) => (
-                          <span
-                            key={i}
-                            className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+          {/* Simplified Journey */}
+          <motion.div
+            initial={{ y: 30, opacity: 0 }}
+            animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto"
+          >
+            {yearData.map((year, index) => (
+              <motion.div
+                key={year.year}
+                className="premium-card text-center group"
+                whileHover={{ scale: 1.05, y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                initial={{ y: 30, opacity: 0 }}
+                animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+                style={{ transitionDelay: `${0.6 + index * 0.1}s` }}
+              >
+                {/* Year Badge */}
+                <div className={`inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r ${year.color} text-white font-bold text-xs mb-3`}>
+                  <TrendingUp className="mr-1" size={12} />
+                  {year.year}
+                </div>
+                
+                <h3 className="text-lg font-bold mb-2">{year.title}</h3>
+                <blockquote className="text-sm text-muted-foreground italic mb-3 border-l-2 border-primary pl-2">
+                  "{year.quote}"
+                </blockquote>
+                
+                {/* Key Skills */}
+                <div className="flex flex-wrap gap-1 justify-center">
+                  {year.skills.slice(0, 3).map((skill, i) => (
+                    <span
+                      key={i}
+                      className="px-2 py-1 bg-primary/10 text-primary text-xs rounded border border-primary/20"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                  {year.skills.length > 3 && (
+                    <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded">
+                      +{year.skills.length - 3}
+                    </span>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -1,13 +1,17 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ExternalLink, Github, Play, Rocket, Brain, BarChart3, Palette, Bot } from 'lucide-react';
+import { ExternalLink, Github, Play, Rocket, Brain, BarChart3, Palette, Bot, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
+import { useState } from 'react';
 
 const Projects = () => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true
   });
+
+  const [selectedProject, setSelectedProject] = useState(null);
 
   const featuredProjects = [
     {
@@ -123,8 +127,9 @@ const Projects = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 + index * 0.1 }}
-                className="premium-card group"
+                className="premium-card group cursor-pointer"
                 whileHover={{ scale: 1.02, y: -5 }}
+                onClick={() => setSelectedProject(project)}
               >
                 <div className={`w-16 h-16 bg-gradient-to-r ${project.gradient} rounded-xl flex items-center justify-center mb-4`}>
                   <project.icon className="text-white" size={32} />
@@ -164,6 +169,7 @@ const Projects = () => {
                       size="sm"
                       className="bg-gradient-primary hover:opacity-90 text-white flex-1"
                       asChild
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="mr-1" size={14} />
@@ -178,6 +184,7 @@ const Projects = () => {
                       variant="outline"
                       className="glass-container border-glass-border"
                       asChild
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                         <Github size={14} />
@@ -191,12 +198,18 @@ const Projects = () => {
                       variant="outline"
                       className="glass-container border-glass-border"
                       asChild
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <a href={project.videoUrl} target="_blank" rel="noopener noreferrer">
                         <Play size={14} />
                       </a>
                     </Button>
                   )}
+                </div>
+                
+                {/* Click to expand hint */}
+                <div className="text-xs text-muted-foreground text-center mt-3 opacity-60 group-hover:opacity-100 transition-opacity">
+                  Click to view details
                 </div>
               </motion.div>
             ))}
@@ -218,7 +231,8 @@ const Projects = () => {
                   key={project.title}
                   whileHover={{ scale: 1.02, y: -3 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="premium-card"
+                  className="premium-card cursor-pointer"
+                  onClick={() => setSelectedProject(project)}
                 >
                   <div className={`w-12 h-12 bg-gradient-to-r ${project.gradient} rounded-lg flex items-center justify-center mb-3`}>
                     <project.icon className="text-white" size={24} />
@@ -232,7 +246,7 @@ const Projects = () => {
                   <p className="text-primary font-semibold text-sm mb-2">{project.subtitle}</p>
                   <p className="text-muted-foreground text-sm mb-3 line-clamp-2">{project.description}</p>
                   
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1 mb-3">
                     {project.tech.slice(0, 3).map((tech, i) => (
                       <span
                         key={i}
@@ -247,10 +261,135 @@ const Projects = () => {
                       </span>
                     )}
                   </div>
+                  
+                  <div className="text-xs text-muted-foreground text-center opacity-60">
+                    Click to view details
+                  </div>
                 </motion.div>
               ))}
             </div>
           </motion.div>
+
+          {/* Project Detail Modal */}
+          {selectedProject && (
+            <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto glass-container border-glass-border">
+                <DialogTitle className="sr-only">{selectedProject.title} Project Details</DialogTitle>
+                
+                {/* Header */}
+                <div className="flex items-start justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${selectedProject.gradient} rounded-xl flex items-center justify-center`}>
+                      <selectedProject.icon className="text-white" size={32} />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-bold">{selectedProject.title}</h2>
+                      <p className="text-primary font-semibold">{selectedProject.subtitle}</p>
+                      <div className={`inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r ${selectedProject.gradient} text-white text-sm font-medium mt-2`}>
+                        {selectedProject.status}
+                      </div>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedProject(null)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <X size={20} />
+                  </Button>
+                </div>
+
+                {/* Content */}
+                <div className="space-y-6">
+                  {/* Description */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Overview</h3>
+                    <p className="text-muted-foreground leading-relaxed">{selectedProject.description}</p>
+                  </div>
+
+                  {/* Inspiration */}
+                  {selectedProject.inspiration && (
+                    <div>
+                      <h3 className="text-lg font-semibold mb-3">Inspiration</h3>
+                      <p className="text-muted-foreground leading-relaxed">{selectedProject.inspiration}</p>
+                    </div>
+                  )}
+
+                  {/* Features */}
+                  {selectedProject.features && (
+                    <div>
+                      <h3 className="text-lg font-semibold mb-3">Key Features</h3>
+                      <ul className="space-y-2">
+                        {selectedProject.features.map((feature, index) => (
+                          <li key={index} className="flex items-start gap-3">
+                            <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="text-muted-foreground">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Technologies */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Technologies Used</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.tech.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-surface text-foreground text-sm rounded-lg border border-glass-border"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-wrap gap-3 pt-4 border-t border-glass-border">
+                    {selectedProject.liveUrl && (
+                      <Button
+                        className="bg-gradient-primary hover:opacity-90 text-white"
+                        asChild
+                      >
+                        <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="mr-2" size={18} />
+                          View Live Project
+                        </a>
+                      </Button>
+                    )}
+                    
+                    {selectedProject.githubUrl && (
+                      <Button
+                        variant="outline"
+                        className="glass-container border-glass-border"
+                        asChild
+                      >
+                        <a href={selectedProject.githubUrl} target="_blank" rel="noopener noreferrer">
+                          <Github className="mr-2" size={18} />
+                          View Code
+                        </a>
+                      </Button>
+                    )}
+                    
+                    {selectedProject.videoUrl && (
+                      <Button
+                        variant="outline"
+                        className="glass-container border-glass-border"
+                        asChild
+                      >
+                        <a href={selectedProject.videoUrl} target="_blank" rel="noopener noreferrer">
+                          <Play className="mr-2" size={18} />
+                          Watch Demo
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          )}
         </motion.div>
       </div>
     </section>

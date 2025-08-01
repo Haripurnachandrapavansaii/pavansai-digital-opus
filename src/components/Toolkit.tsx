@@ -125,66 +125,49 @@ const Toolkit = () => {
             </p>
           </motion.div>
 
-          {/* Introduction Card */}
+          {/* All Tools in Single Card */}
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="glass-container p-8 mb-12 text-center"
+            className="glass-container p-8 mb-12"
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-6">
               <Wrench className="text-primary" size={32} />
               <h3 className="text-2xl font-bold">AI-First Approach</h3>
             </div>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-center mb-8">
               I leverage AI tools not as a replacement for human creativity, but as amplifiers for innovation. 
               Each tool in my arsenal serves a specific purpose in my daily workflow, from ideation to execution.
             </p>
-          </motion.div>
-
-          {/* Tools Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {toolCategories.map((category, index) => (
-              <motion.div
-                key={category.category}
-                initial={{ y: 50, opacity: 0 }}
-                animate={inView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 + index * 0.1 }}
-                whileHover={{ scale: 1.03, y: -5 }}
-                className="premium-card group relative overflow-hidden"
-              >
-                {/* Background Gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
-                
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Icon */}
-                  <div className={`w-16 h-16 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <category.icon className="text-white" size={32} />
+            
+            {/* Tools Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {toolCategories.map((category, index) => (
+                <motion.div
+                  key={category.category}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={inView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 + index * 0.05 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="text-center p-4 rounded-lg hover:bg-surface/50 transition-colors"
+                >
+                  <div className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-lg flex items-center justify-center mx-auto mb-3`}>
+                    <category.icon className="text-white" size={20} />
                   </div>
-                  
-                  {/* Category */}
-                  <h3 className="text-xl font-bold mb-2">{category.category}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">{category.description}</p>
-                  
-                  {/* Tools */}
-                  <div className="space-y-2">
-                    {category.tools.map((tool, i) => (
-                      <motion.div
-                        key={tool}
-                        className="flex items-center gap-2 p-2 rounded-lg bg-surface/50 hover:bg-surface transition-colors"
-                        whileHover={{ x: 5 }}
-                        transition={{ type: "spring", stiffness: 400 }}
-                      >
-                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${category.color}`}></div>
-                        <span className="text-sm font-medium">{tool}</span>
-                      </motion.div>
+                  <h4 className="text-sm font-semibold mb-2">{category.category}</h4>
+                  <div className="space-y-1">
+                    {category.tools.map((tool) => (
+                      <div key={tool} className="text-xs text-muted-foreground">
+                        {tool}
+                      </div>
                     ))}
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
 
           {/* Usage Philosophy */}
           <motion.div

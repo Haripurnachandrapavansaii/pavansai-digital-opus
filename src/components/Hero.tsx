@@ -56,6 +56,7 @@ const Hero = () => {
                   'AI/ML Engineer',
                   'Full-Stack Developer', 
                   'Data Scientist',
+                  'Data Analyst & Visualization',
                   'Innovation Catalyst',
                   'Problem Solver'
                 ],
@@ -90,9 +91,9 @@ const Hero = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
             {[
               { label: 'CGPA', value: '9.21/10' },
-              { label: 'Projects', value: '10+' },
+              { label: 'Projects', value: '5+' },
               { label: 'Technologies', value: '25+' },
-              { label: 'Experience', value: '2+ Years' }
+              { label: 'Certifications', value: '3+' }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}

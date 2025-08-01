@@ -96,16 +96,8 @@ const Footer = () => {
           <div className="border-t border-glass-border mb-6"></div>
 
           {/* Footer Text */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <span>© {currentYear} Suravarapu Hari Purna Chandra Pavan Sai</span>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <span>Made with</span>
-              <Heart className="text-red-500" size={16} />
-              <span>using React, Framer Motion & Tailwind CSS</span>
-            </div>
+          <div className="text-center text-sm text-muted-foreground">
+            <span>© {currentYear} Suravarapu Hari Purna Chandra Pavan Sai</span>
           </div>
 
           {/* Status */}

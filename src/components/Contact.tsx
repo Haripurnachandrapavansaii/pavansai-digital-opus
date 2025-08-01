@@ -226,7 +226,7 @@ const Contact = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <MapPin className="text-primary" size={16} />
-                    <span className="text-sm text-muted-foreground">Chennai, India (Open to relocation)</span>
+                    <span className="text-sm text-muted-foreground">Andhra Pradesh, India (Open to relocation)</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-primary">🎓</span>

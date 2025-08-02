@@ -12,6 +12,7 @@ const Projects = () => {
   });
 
   const [selectedProject, setSelectedProject] = useState(null);
+  const [expandedTech, setExpandedTech] = useState<Record<string, boolean>>({});
 
   const featuredProjects = [
     {
@@ -146,7 +147,7 @@ const Projects = () => {
                 {/* Key Tech */}
                 <div className="mb-4">
                   <div className="flex flex-wrap gap-1">
-                    {project.tech.slice(0, 4).map((tech, i) => (
+                    {(expandedTech[project.title] ? project.tech : project.tech.slice(0, 4)).map((tech, i) => (
                       <span
                         key={i}
                         className="px-2 py-1 bg-surface text-foreground text-xs rounded border border-glass-border"
@@ -155,8 +156,17 @@ const Projects = () => {
                       </span>
                     ))}
                     {project.tech.length > 4 && (
-                      <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded">
-                        +{project.tech.length - 4}
+                      <span 
+                        className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded cursor-pointer hover:bg-muted/80 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedTech(prev => ({
+                            ...prev,
+                            [project.title]: !prev[project.title]
+                          }));
+                        }}
+                      >
+                        {expandedTech[project.title] ? 'Show less' : `+${project.tech.length - 4}`}
                       </span>
                     )}
                   </div>
@@ -247,7 +257,7 @@ const Projects = () => {
                   <p className="text-muted-foreground text-sm mb-3 line-clamp-2">{project.description}</p>
                   
                   <div className="flex flex-wrap gap-1 mb-3">
-                    {project.tech.slice(0, 3).map((tech, i) => (
+                    {(expandedTech[project.title] ? project.tech : project.tech.slice(0, 3)).map((tech, i) => (
                       <span
                         key={i}
                         className="px-2 py-1 bg-surface text-foreground text-xs rounded border border-glass-border"
@@ -256,8 +266,17 @@ const Projects = () => {
                       </span>
                     ))}
                     {project.tech.length > 3 && (
-                      <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded">
-                        +{project.tech.length - 3}
+                      <span 
+                        className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded cursor-pointer hover:bg-muted/80 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedTech(prev => ({
+                            ...prev,
+                            [project.title]: !prev[project.title]
+                          }));
+                        }}
+                      >
+                        {expandedTech[project.title] ? 'Show less' : `+${project.tech.length - 3}`}
                       </span>
                     )}
                   </div>

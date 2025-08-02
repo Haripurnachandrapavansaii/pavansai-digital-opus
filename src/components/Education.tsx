@@ -1,12 +1,15 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { GraduationCap, Calendar, Award, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
 
 const Education = () => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true
   });
+  
+  const [expandedSkills, setExpandedSkills] = useState<Record<string, boolean>>({});
 
   const yearData = [
     {
@@ -129,7 +132,7 @@ const Education = () => {
                 
                 {/* Key Skills */}
                 <div className="flex flex-wrap gap-1 justify-center">
-                  {year.skills.slice(0, 3).map((skill, i) => (
+                  {(expandedSkills[year.year] ? year.skills : year.skills.slice(0, 3)).map((skill, i) => (
                     <span
                       key={i}
                       className="px-2 py-1 bg-primary/10 text-primary text-xs rounded border border-primary/20"
@@ -138,8 +141,14 @@ const Education = () => {
                     </span>
                   ))}
                   {year.skills.length > 3 && (
-                    <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded">
-                      +{year.skills.length - 3}
+                    <span 
+                      className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded cursor-pointer hover:bg-muted/80 transition-colors"
+                      onClick={() => setExpandedSkills(prev => ({
+                        ...prev,
+                        [year.year]: !prev[year.year]
+                      }))}
+                    >
+                      {expandedSkills[year.year] ? 'Show less' : `+${year.skills.length - 3}`}
                     </span>
                   )}
                 </div>

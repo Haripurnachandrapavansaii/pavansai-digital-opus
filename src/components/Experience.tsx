@@ -2,12 +2,15 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Briefcase, Calendar, Award, ExternalLink, Code, Brain, Users, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 
 const Experience = () => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true
   });
+  
+  const [expandedSkills, setExpandedSkills] = useState<Record<string, boolean>>({});
 
   const internships = [
     {
@@ -135,7 +138,7 @@ const Experience = () => {
                   
                   <div className="mb-3">
                     <div className="flex flex-wrap gap-1">
-                      {internship.skills.slice(0, 3).map((skill, i) => (
+                      {(expandedSkills[internship.title] ? internship.skills : internship.skills.slice(0, 3)).map((skill, i) => (
                         <span
                           key={i}
                           className="px-2 py-1 bg-surface text-foreground text-xs rounded border border-glass-border"
@@ -144,8 +147,14 @@ const Experience = () => {
                         </span>
                       ))}
                       {internship.skills.length > 3 && (
-                        <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded">
-                          +{internship.skills.length - 3}
+                        <span 
+                          className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded cursor-pointer hover:bg-muted/80 transition-colors"
+                          onClick={() => setExpandedSkills(prev => ({
+                            ...prev,
+                            [internship.title]: !prev[internship.title]
+                          }))}
+                        >
+                          {expandedSkills[internship.title] ? 'Show less' : `+${internship.skills.length - 3}`}
                         </span>
                       )}
                     </div>
